@@ -1,0 +1,10 @@
+./__pycache__
+
+# web application file
+
+
+./modules/__pycache__
+modules/
+.idea
+
+.vscode
