@@ -16,8 +16,7 @@ from modules import grirreport
 class Frame(wx.Frame):
 
     def __init__(self):
-        wx.Frame.__init__(self, None, -1, u'xy工具箱',
-                          size=(1080, 730), pos=(350, 20))
+        wx.Frame.__init__(self, None, -1, u'xy工具箱', size=(1080, 730), pos=(350, 20))
         self.sp = wx.SplitterWindow(self, style=wx.SP_LIVE_UPDATE)
         self.panel1 = wx.Panel(self.sp, -1, style=wx.SUNKEN_BORDER)
         self.panel2 = wx.Panel(self.sp, -1)
@@ -161,8 +160,7 @@ class Frame(wx.Frame):
 # 启动画面
 def splash_screen():
     pic = wx.Image('./pic/splashscreen.png', type=wx.BITMAP_TYPE_PNG).ConvertToBitmap()
-    adv.SplashScreen(pic, adv.SPLASH_CENTER_ON_SCREEN |
-                     adv.SPLASH_TIMEOUT, 1000, None, -1)
+    adv.SplashScreen(pic, adv.SPLASH_CENTER_ON_SCREEN | adv.SPLASH_TIMEOUT, 1000, None, -1)
 
 
 if __name__ == '__main__':
