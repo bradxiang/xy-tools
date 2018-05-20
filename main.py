@@ -32,6 +32,8 @@ class Frame(wx.Frame):
         self.home_handler(None)
         self.set_menubar()
         self.set_toolbar()
+        icon = wx.Icon('./myicon.ico', wx.BITMAP_TYPE_ICO, 32, 32)
+        self.SetIcon(icon)
 
     # 分割窗口
     def set_splitter_window(self):
