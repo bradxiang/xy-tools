@@ -175,7 +175,7 @@ if __name__ == '__main__':
     dlg.Destroy()
     if globalvar.get_loginvalue():
         exit()
-    # # 主框架
+    # 主框架
     frame = Frame()
     frame.Show()
     app.MainLoop()
