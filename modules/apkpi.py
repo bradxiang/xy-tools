@@ -16,7 +16,7 @@ class ApKpi():
         group = pd.DataFrame()
         temp = in_file_name.split('\\')
         out_file_name = self.get_desktop(
-        ) + '/DATA/kpi-ap-aging-output-' + temp[len(temp) - 1]
+        ) + '\\DATA\\kpiapaging-output-' + temp[len(temp) - 1]
         xls_file = pd.ExcelFile(in_file_name)
         b = xlrd.open_workbook(in_file_name)
         contents.write(
@@ -117,6 +117,8 @@ class ApKpi():
                         data_columns = data.columns
                 group = pd.concat([group, data], axis=0)
                 contents.write('完成entity: ' + sheet.name + '\n')
+            else:
+                contents.write('文件选择错误或将待处理表重命名为数字，若'+ sheet.name + '表无用请忽略本条信息！！！\n')
         group = group[data_columns.values]
         writer = pd.ExcelWriter(out_file_name)
         name = "KPI-AP-AGING"
@@ -131,26 +133,30 @@ class ApKpi():
     def get_desktop():
         key = winreg.OpenKey(
             winreg.HKEY_CURRENT_USER,
-            r'Software\Microsoft\Windows\Current' +
-            r'Version\Explorer\Shell Folders',
-        )
+            r'Software\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders')
         return winreg.QueryValueEx(key, "Desktop")[0]
 
     @staticmethod
-    def make_dir(path, contents):
-        path = path.strip()  # 去除首位空格
-        path = path.rstrip("\\")  # 去除尾部 \ 符号
-        is_exists = os.path.exists(path)
-        if not is_exists:  # 判断结果
+    def create_directory(path, contents):
+        # 去除首位空格
+        path = path.strip()
+        # 去除尾部 \ 符号
+        path = path.rstrip("\\")
+        if not os.path.exists(path):
             try:
                 os.makedirs(path)
-                contents.write('创建桌面文件夹DATA成功\n')
+                contents.write(path + '创建成功\n')
+                return True
             except Exception as e:
-                contents.write('ERROR: ' + e + '创建桌面文件夹DATA失败请手动创建\n')
+                contents.write('ERROR: ' + e + '\n请手动在桌面创建名称为DATA文件夹\n')
+                return False
         else:
-            contents.write('文件夹data已存在\n')
+            contents.write(path + '目录已存在\n')
+            return False
 
     def run(self, in_file_name, contents):
-        path = self.get_desktop() + '/DATA'  # 定义要创建的目录
-        self.make_dir(path, contents)
+        contents.write('******************开始处理*******************\n')
+        path = self.get_desktop() + '\\DATA'  # 定义要创建的目录
+        self.create_directory(path, contents)
         self.process_excel(in_file_name, contents)
+        contents.write('******************结束处理*******************\n')

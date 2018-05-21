@@ -109,12 +109,12 @@ class InputNotepadDialog(NotepadDialog):
     """docstring for notepad"""
 
     def __init__(self, name, target, target_args):
-        super().__init__(name, target)
         """
         name dialog及线程名称
         target 执行函数
         target_args 执行函数的参数
         """
+        super().__init__(name, target)
         self.openBtn.SetLabel('open')
         self.target_args = target_args
 
